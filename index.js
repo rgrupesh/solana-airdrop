@@ -28,6 +28,27 @@ const getWalletBalance = async () => {
     }
 };
 
+const airDropSol = async () => {
+    try {
+        const connection = new Connection(clusterApiUrl("devnet"), "confirmed");
+        const walletKeyPair = await Keypair.fromSecretKey(secretKey);
+        console.log(`-- Airdropping 2 SOL --`)
+        const fromAirDropSignature = await connection.requestAirdrop(
+            new PublicKey(walletKeyPair.publicKey),
+            2 * LAMPORTS_PER_SOL
+        );
+        await connection.confirmTransaction(fromAirDropSignature);
+    } catch (err) {
+        console.log(err);
+    }
+};
+
+const driverFunction = async () => {
+    await getWalletBalance();
+    await airDropSol();
+    await getWalletBalance();
+}
+driverFunction();
 
 
 
