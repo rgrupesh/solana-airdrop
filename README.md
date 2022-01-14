@@ -1,1 +1,3 @@
 # solana-airdrop
+
+![](sol.png)
